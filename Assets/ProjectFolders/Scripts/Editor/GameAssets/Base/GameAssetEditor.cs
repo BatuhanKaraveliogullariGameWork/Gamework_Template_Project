@@ -27,7 +27,7 @@ public class GameAssetEditor : Editor
         {
             EditorStyles.textField.wordWrap = true;
             EditorStyles.textField.fixedHeight = 150f;
-            EditorGUILayout.TextArea(gameAsset.eventInfo);
+            gameAsset.eventInfo = EditorGUILayout.TextArea(gameAsset.eventInfo);
         }
         EditorStyles.textField.fixedHeight = 20f;
     }
