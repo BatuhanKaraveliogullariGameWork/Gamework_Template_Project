@@ -7,28 +7,40 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewVector3Variable", menuName = "GameVariables/Vector3Variable")]
 public class Vector3Variable : GameVariable
 {
-    public Vector3 Value;
+    public Vector3 Value { get => savedValue; }
+
+    [Tooltip("Oyun her başladığında değer kaçta kalmış olursa olsun variableın başlayacağı değerdir. Bir nevi resetable variable yapılmaktadır. Sadece oyun başında setlenir.")]
+    [SerializeField] private Vector3 initialValue;
+
+    private Vector3 savedValue;
+
+    private void OnEnable() 
+    {
+        if(!useInitialValue) return;
+        savedValue = initialValue;
+    }
+
     ///<Summary> Float ile değer ataması yapılmaktadır.</Summary>
-    public void SetValue(Vector2 amount) => Value = amount;
+    public void SetValue(Vector2 amount) => savedValue = amount;
 
     ///<Summary> FloatVariable ile değer ataması yapılmaktadır.</Summary>
-    public void SetValue(Vector2Variable amount) => Value = amount.Value;
+    public void SetValue(Vector2Variable amount) => savedValue = amount.Value;
 
     ///<Summary> Float ile scale yapılmaktadır.</Summary>
-    public void Scale(float multiplier) => Value *= multiplier;
+    public void Scale(float multiplier) => savedValue *= multiplier;
 
     ///<Summary> İnt ile scale yapılmaktadır.</Summary>
-    public void Scale(int multiplier) => Value *= multiplier;
+    public void Scale(int multiplier) => savedValue *= multiplier;
 
     ///<Summary> FloatVariable ile scale yapılmaktadır.</Summary>
-    public void Scale(FloatVariable multiplier) => Value *= multiplier.Value;
+    public void Scale(FloatVariable multiplier) => savedValue *= multiplier.Value;
 
     ///<Summary> FloatReference ile scale yapılmaktadır.</Summary>
-    public void Scale(FloatReference multiplier) => Value *= multiplier.Value;
+    public void Scale(FloatReference multiplier) => savedValue *= multiplier.Value;
 
     ///<Summary> IntVariable ile scale yapılmaktadır.</Summary>
-    public void Scale(IntVariable multiplier) => Value *= multiplier.Value;
+    public void Scale(IntVariable multiplier) => savedValue *= multiplier.Value;
 
     ///<Summary> IntReference ile scale yapılmaktadır.</Summary>
-    public void Scale(IntReference multiplier) => Value *= multiplier.Value;
+    public void Scale(IntReference multiplier) => savedValue *= multiplier.Value;
 }

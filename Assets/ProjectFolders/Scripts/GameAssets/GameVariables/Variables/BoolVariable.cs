@@ -7,11 +7,28 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewBoolVariable", menuName = "GameVariables/BoolVariable")]
 public class BoolVariable : GameVariable
 {
-    public bool Value;
+    public bool Value { get => savedValue; }
+
+    [Tooltip("Oyun her başladığında değer kaçta kalmış olursa olsun variableın başlayacağı değerdir. Bir nevi resetable variable yapılmaktadır. Sadece oyun başında setlenir.")]
+    [SerializeField] private bool initialValue;
+
+    private bool savedValue;
+
+    private void OnEnable() 
+    {
+        if(!useInitialValue) return;
+        savedValue = initialValue;
+    }
 
     ///<Summary> Bool ile değer ataması yapılmaktadır.</Summary>
-    public void SetValue(bool amount) => Value = amount;
+    public void SetValue(bool amount) => savedValue = amount;
 
     ///<Summary> BoolVariable ile değer ataması yapılmaktadır.</Summary>
-    public void SetValue(BoolVariable amount) => Value = amount.Value;
+    public void SetValue(BoolVariable amount) => savedValue = amount.Value;
+
+    ///<Summary> BoolReference ile değer ataması yapılmaktadır.</Summary>
+    public void SetValue(BoolReference amount) => savedValue = amount.Value;
+
+    ///<Summary> Bu fonksiyon variable true ise false, false ise true yapmaktadır.</Summary>
+    public void ToggleValue() => savedValue = !savedValue;
 }
